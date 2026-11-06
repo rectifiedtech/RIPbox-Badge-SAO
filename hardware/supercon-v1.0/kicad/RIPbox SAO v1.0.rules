@@ -1,0 +1,81 @@
+
+(rules PCB Ripbox SAO v2
+  (snap_angle 
+    fortyfive_degree
+  )
+  (autoroute_settings
+    (fanout off)
+    (autoroute on)
+    (postroute on)
+    (vias on)
+    (via_costs 50)
+    (plane_via_costs 5)
+    (start_ripup_costs 100)
+    (start_pass_no 2456)
+    (layer_rule F.Cu
+      (active on)
+      (preferred_direction vertical)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 3.5)
+    )
+    (layer_rule B.Cu
+      (active on)
+      (preferred_direction horizontal)
+      (preferred_direction_trace_costs 1.0)
+      (against_preferred_direction_trace_costs 1.4)
+    )
+  )
+  (rule
+    (width 200.0)
+    (clear 200.0)
+    (clear 100.0 (type smd_to_turn_gap))
+    (clear 50.0 (type smd_smd))
+  )
+  (padstack "Via[0-1]_600:300_um"
+    (shape
+      (circle F.Cu 600.0 0.0 0.0)
+    )
+    (shape
+      (circle B.Cu 600.0 0.0 0.0)
+    )
+    (attach off)
+  )
+  (via 
+    "Via[0-1]_600:300_um" "Via[0-1]_600:300_um" default
+  )
+  (via 
+    "Via[0-1]_600:300_um-kicad_default" "Via[0-1]_600:300_um" "kicad_default"
+  )
+  (via_rule
+    default "Via[0-1]_600:300_um"
+  )
+  (via_rule
+    "kicad_default" "Via[0-1]_600:300_um-kicad_default"
+  )
+  (class default
+    (clearance_class default)
+    (via_rule default)
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+  (class "kicad_default"
+    +3V3 "Net-(D3-A)" "BUTTON_1" GND "BUTTON_2" "Net-(D1-A)" "Net-(D2-A)" "Net-(J2-BS1)"
+    "Net-(J2-CVOMH)" SCL "Net-(J2-VSS)" "Net-(J2-IREF)" RESET "unconnected-(U1-ADC-Pad2)" "unconnected-(U1-GPIO16-Pad4)" "unconnected-(U1-CS0-Pad9)"
+    "unconnected-(U1-MISO-Pad10)" "unconnected-(U1-GPIO9-Pad11)" "unconnected-(U1-GPIO10-Pad12)" "unconnected-(U1-MOSI-Pad13)" "unconnected-(U1-SCLK-Pad14)" "unconnected-(U1-GPIO2-Pad17)" GPIO0 SDA
+    RX TX "Net-(R9-Pad1)" RES "Net-(J2-C2P)" "Net-(J2-C2N)" "Net-(J2-C1P)" "Net-(J2-C1N)"
+    DC "Net-(J2-VCC)" "Net-(J1-Pin_2)" GPIO1 "Net-(J1-Pin_1)" "Net-(J1-Pin_5)" "Net-(J1-Pin_6)" GPIO2
+    "Net-(U1-GPIO15)" LED
+    (clearance_class "kicad_default")
+    (via_rule kicad_default)
+    (rule
+      (width 200.0)
+    )
+    (circuit 
+      (use_layer F.Cu B.Cu)
+    )
+  )
+)

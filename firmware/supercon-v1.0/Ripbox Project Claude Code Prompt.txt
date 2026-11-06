@@ -1,0 +1,131 @@
+Scope of project
+Startup
+    -The logo LED needs to always be on unless it receives message or gets pinged by another ripbox.
+    -ESPnow needs to always be running in the background to allow other ripboxes to discover them, ping them, and send messages to them. When a ripbox is pinged then it needs to flash the led logo over and over and display a "Kiosk ID XX just pinged you" until the user presses a button, when a message is received by another ripbox then the logo led needs to flash over and over and display "New msg from kiosk ID XX, push to view" then when any button is pressed it will display the message and save it to flash memory where it can be read again later with the kiosk id number associated with the message.
+    -Display ripbox logo with kiosk ID number (this number is a three digit number that needs to be stored in the flash memory and the default is 999, make a note in the code as to which exact memory address this is stored at for future reference).
+    -Default to redbox animations and rental animations.
+    -Pressing either button separately opens the rental menu.
+    -Pressing both buttons brings up the secret menu at any time.
+
+Redbox rental animations
+    -Cycle through generic ads for renting movies (until either button is pressed).
+    -Pressing any button brings up the rental menu.
+
+Rental menu
+    -selectable list of movie rentals (refer to movie list).
+    -use left button to scroll through the movie list and right button to select movie.
+    -when movie is selected then show a fictious price and the left button goes back and the right button goes to a fictious payment process and animation when purchased.
+
+Secret menu
+    -List of applications (kiosk id number at top right of screen - only two digits)
+        --Messages - Displays a list of messages from other kiosks with their kiosk id and number incoming messages starting with "1".
+        --Scan for kiosk - this menu option will open another menu that will automatically scan for other ripboxes and allows the user to select as kiosk id in range.
+            ---Send Message - this will bring up a basic text editor that allows the user to type out their message using the left button to select the letter or number and the right button will type the selected number, pressing and holding the left button will type a space character, pressing and holding the right button will send the message and and verify whether the message was received or not by the other device.
+            ---Ping Kiosk - this will ping the selected kiosk ID in range.
+        --Games
+            ---Tetris style game
+            ---Flappy bird style game
+            ---Block breaker style game
+        
+        
+        
+
+
+
+
+
+
+
+#PROMPT
+
+Write some arduino code for the an esp8266 that has the following specifications:
+
+The application is for a PCB SAO (simple add-on) badge for the 2026 hackaday superconference that is a Redbox kiosk shaped pcb with two buttons, a 64x48 ssd1306 OLED display, and an LED at the top to light up the logo.
+This is a Redbox that is being rebranded as RIPbox to commemorate the defunct company Redbox that went out of business, this badge also has lots of other features mentioned in detail.
+
+The ESP8266 is configured with the following pins:
+GPIO 12 - Button 1 (left button, or select button), requires internal pullup resistor to be enabled.
+GPIO 13 - Button 2 (right button, or enter button), requires internal pullup resistor to be enabled.
+GPIO 14 - Logo LED, pull high to turn on.
+Display - SSD1306 64x48 OLED display - i2c address 0x3c (this is a very small display, please make sure text actually fits on the screen, even if you need to use a very small font).
+Use the U8g2 library for the screen and graphics and make sure to optimize for very low flicker on animations.
+#include <U8g2lib.h>
+
+U8G2_SSD1306_64X48_ER_F_HW_I2C u8g2(
+  U8G2_R0,
+  U8X8_PIN_NONE
+);
+
+
+
+Startup
+    -The logo LED needs to always be on unless it receives message or gets pinged by another ripbox.
+    -ESPnow needs to always be running in the background to allow other ripboxes to discover them, ping them, and send messages to them. When a ripbox is pinged then it needs to flash the led logo over and over and display a "Kiosk ID XX just pinged you" until the user presses a button, when a message is received by another ripbox then the logo led needs to flash over and over and display "New msg from kiosk ID XX, push to view" then when any button is pressed it will display the message and save it to flash memory where it can be read again later with the kiosk id number associated with the message.
+    -Display ripbox logo with kiosk ID number (this number is a three digit number that needs to be stored in the flash memory and the default is 999, make a note in the code as to which exact memory address this is stored at for future reference).
+    -Default to redbox animations and rental animations.
+    -Pressing either button separately opens the rental menu.
+    -Pressing both buttons brings up the secret menu at any time.
+
+Redbox rental animations
+    -Cycle through generic ads for renting movies (until either button is pressed).
+    -Pressing any button brings up the rental menu.
+
+Rental menu
+    -selectable list of movie rentals (refer to movie list).
+    -use left button to scroll through the movie list and right button to select movie.
+    -when movie is selected then show a fictious price and the left button goes back and the right button goes to a fictious payment process and animation when purchased.
+
+Secret menu
+    -List of applications (kiosk id number at top right of screen - only two digits)
+        --Messages - Displays a list of messages from other kiosks with their kiosk id and number incoming messages starting with "1".
+        --Scan for kiosk - this menu option will open another menu that will automatically scan for other ripboxes and allows the user to select as kiosk id in range.
+            ---Send Message - this will bring up a basic text editor that allows the user to type out their message using the left button to select the letter or number and the right button will type the selected number, pressing and holding the left button will type a space character, pressing and holding the right button will send the message and and verify whether the message was received or not by the other device.
+            ---Ping Kiosk - this will ping the selected kiosk ID in range.
+        --Games - a submenu to select a game to play.
+            ---Flappy bird style game, press right button to jump and left button to exit game.
+            ---Block breaker style gamem press left button to move paddle left and right button to move paddle right.
+
+Below is a list of all of the movie titles that need to be in the rental movie list:
+Anyone But You (2023)
+Aquaman and the Lost Kingdom (2023)
+Argylle (2024)
+Bandit (2022)
+Becky (2020)
+Black Site (2022)
+Bob Marley: One Love (2024)
+Breslau (2025)
+By Night's End (2020)
+Chief of Station (2024)
+Civil War (2024)
+Domain (2016)
+Dune: Part Two (2024)
+Fast X (2023)
+Ghostbusters: Frozen Empire (2024)
+Godzilla x Kong: The New Empire (2024)
+John Wick: Chapter 4 (2023)
+Jurassic World Dominion (2022)
+Knox Goes Away (2023)
+Kung Fu Panda 4 (2024)
+Land of Bad (2024)
+Madame Web (2024)
+Mean Girls (2024) (2024)
+Migration (2023)
+No Time to Die (2021)
+One Ranger (2023)
+Rogue Hostage (2021)
+SAS: Red Notice (2021)
+Shade (2003)
+Shadow in the Cloud (2020)
+Spider-Man: Across the Spider-Verse (2023)
+The Beekeeper (2024)
+The Bricklayer (2023)
+The Fanatic (2019)
+The Hunger Games: The Ballad of Songbirds & Snakes (2023)
+The Informer (2019)
+The Iron Claw (2023)
+The Super Mario Bros. Movie (2023)
+Top Gun: Maverick (2022)
+Vendetta (2022)
+Wonka (2023)
+
+
